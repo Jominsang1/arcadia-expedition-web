@@ -15,8 +15,13 @@ progress{width:min(500px,85vw);margin:22px}#error{color:#ffb49a;white-space:pre-
 <div id="cover"><h1>아르카디아 원정대</h1><p>5:5 턴제 원정 · 웹 체험판</p>
 <p>진행은 이 브라우저에 자동 저장됩니다.<br>다른 PC·브라우저와 공유되지 않으며, 사이트 데이터를 삭제하면 초기화됩니다.<br>비공개 창에서는 저장이 유지되지 않을 수 있습니다.</p>
 <button id="play">모험 시작</button><progress id="progress" hidden></progress><p id="error"></p></div>
-<script src="index.js"></script><script>
-const config={"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":false,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":81369376,"index.wasm":39514754},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+<script>
+const arcadiaBuild='b84eba93377859ab';
+const originalFetch=window.fetch.bind(window);
+window.fetch=(input,options)=>originalFetch(input,{...(options||{}),cache:'no-store'});
+fetch('version.json').then(r=>r.json()).then(v=>{if(v.version!==arcadiaBuild && new URL(location.href).searchParams.get('build')!==v.version){const u=new URL(location.href);u.searchParams.set('build',v.version);location.replace(u);}}).catch(()=>{});
+</script><script src="index.js?v=b84eba93377859ab"></script><script>
+const config={"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":false,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":77900080,"index.wasm":39514754},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
 const engine=new Engine(config);
 const play=document.getElementById('play'),progress=document.getElementById('progress'),error=document.getElementById('error');
 window.arcadiaHasLock=false;
